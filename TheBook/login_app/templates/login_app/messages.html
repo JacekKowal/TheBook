@@ -1,0 +1,52 @@
+{% extends 'home_app/base.html' %}
+{% block content %}
+    <h2>CHAT with(ONLY followed users):</h2>
+    {% for user in followed %}
+        <ul>
+            <a
+                    href="{% url 'send-message' user.id %}"> {{ user }}</a>
+        </ul>
+    {% endfor %}
+    <h3>Messages sent:</h3>
+    {% for to in messages_to %}
+        <img class="rounded-circle article-img"
+             src="{{ to.author.image.url }}" width="20"
+             height="20">
+        {{ to.author }} {{ to.send }}
+        <article class="p-1 p-md-1 mt-2 rounded text-bg-secondary">
+        Sent to:
+            <img class="rounded-circle article-img"
+                 src="{{ to.receiver.image.url }}" width="20"
+                 height="20">
+            {{ to.receiver }}
+        <article class="p-1 p-md-1 mt-2 rounded text-bg-primary">
+            {{ to.body }}
+        </article>
+
+        </article>
+    {% endfor %}
+
+    <h3>Messages received:</h3>
+    {% for from in messages_from %}
+        <img class="rounded-circle article-img"
+             src="{{ from.author.image.url }}" width="20"
+             height="20">
+        {{ from.author }} {{ from.send }}
+        <article class="p-1 p-md-1 mt-2 rounded text-bg-secondary">
+        Sent to:
+            <img class="rounded-circle article-img"
+                 src="{{ from.receiver.image.url }}" width="20"
+                 height="20">
+            {{ from.receiver }}
+        <article class="p-1 p-md-1 mt-2 rounded text-bg-primary">
+            {{ from.body }}
+        </article>
+
+        </article>
+    {% endfor %}
+
+
+
+
+
+{% endblock %}

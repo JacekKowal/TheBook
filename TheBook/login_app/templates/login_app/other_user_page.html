@@ -1,0 +1,67 @@
+{% extends "home_app/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2 class="mt-4">{{ other_user.username }}</h2>
+        <div class="row mb-3 text-center">
+            <div class="col-md-auto themed-grid-col">
+                <div class="pb-4">
+                    <img height="200" src="{{ other_user.image.url }}">
+                </div>
+                <div class="row">
+                    <div class="col-md-4 themed-grid-col">
+                        <form action="#" method="post">
+                            {% csrf_token %}
+                            <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+                            <h1 class="h3 mb-3 fw-normal">User Info</h1>
+
+                            <div class="form-floating">
+                                <input type="text" value="{{ other_user.username }}" name="name" class="form-control"
+                                       id="floatingInput" placeholder="name" disabled>
+                                <label for="floatingInput">User name</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="email" value="{{ other_user.email }}" name="email" class="form-control"
+                                       id="floatingInput"
+                                       placeholder="name@example.com"
+                                       disabled>
+                                <label for="floatingInput">Email Adress</label>
+                            </div>
+                            <!--
+                            <label for="img">Select profile pic:</label>
+                            <div class="input-group mb-3">
+                                <input type="file" name="profile_pic" class="form-control" id="inputGroupFile02">
+                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                            </div>
+
+                            <button class="w-100 btn btn-lg btn-secondary" type="submit">Follow</button>
+                            -->
+                        </form>
+                        {% if followed %}
+                            <form action="{% url 'unfollow-view' other_user.id %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-primary btn-sm"
+                                        type="submit">Unfollow
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'follow-view' other_user.id %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-primary btn-sm"
+                                        type="submit">Follow
+                                </button>
+                            </form>
+                        {% endif %}
+
+                        <a class="btn btn-primary" href="{% url 'send-message' other_user.id %}" role="button">Send Message</a>
+
+                    </div>
+
+                    </div>
+
+                </div>
+            </div>
+            {#            <div class="col-md-4 themed-grid-col">.col-md-4</div>#}
+        </div>
+    </div>
+
+{% endblock content %}
