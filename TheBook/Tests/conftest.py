@@ -24,6 +24,7 @@ def post(user):
     }
     return Post.objects.create(**data)
 
+
 @pytest.fixture
 def relation(user, user2):
     return Relations.objects.create(initiator=user, receiver=user2)
