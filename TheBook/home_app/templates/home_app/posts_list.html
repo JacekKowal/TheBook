@@ -8,7 +8,7 @@
             {% if post.author.username == user.username %}
                 <p>{{ post.updated }}&emsp;Author: <a
                         href="{% url 'profile-view' post.author.id %}"> {{ post.author }}</a>
-                    <a class="btn btn-outline-warning btn-sm float-end" href="{% url 'post-view' post.id %}"
+                    <a class="btn btn-outline-warning btn-sm float-end ms-1" href="{% url 'post-view' post.id %}"
                        role="button">Update Post</a>
                     <a class="btn btn-danger btn-sm float-end" href="{% url 'post-delete' post.id %}"
                        role="button">Delete Post</a>
@@ -19,7 +19,7 @@
                         href="{% url 'profile-view' post.author.id %}"> {{ post.author }}</a></p>
             {% endif %}
             <hr>
-            <p class="lead my-3">{{ post.body }}</p>
+            <p class="lead my-3">{{ post.body|linebreaks }}</p>
             <p class="font-monospace m-0">Likes: {{ post.total_likes }} <!-- OR post.who_liked.all.count -->
                 {% if post.total_likes %}
                     (

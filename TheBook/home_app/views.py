@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -32,8 +33,17 @@ class HomeView(View):
         for r in user.initiated_relations.all():
             followed_users.append(r.receiver)
         posts = Post.objects.filter(author__in=followed_users)
+        #Add pagination:
+        paginator = Paginator(posts, 5)
+        page = request.GET.get('page')
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
         users = CustomUser.objects.all()
-        return render(request, 'home_app/posts.html', context={'posts': posts, 'users': users})
+        return render(request, 'home_app/posts.html', context={'posts': posts, 'users': users, page: 'page'})
 
 
 class PostCreateView(CreateView):

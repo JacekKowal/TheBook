@@ -1,4 +1,5 @@
 {% extends "home_app/base.html" %}
 {% block content %}
     {% include "home_app/posts_list.html" %}
+    {% include "home_app/pagination.html" with page=posts %}
 {% endblock %}
